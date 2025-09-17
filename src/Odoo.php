@@ -304,6 +304,26 @@ class Odoo
         return $this->makeResponse($result);
     }
 
+    /**
+     * Get a list of records by ids.
+     * @param $model
+     * @param array $ids
+     * @return Collection|mixed
+     * @throws OdooException
+     */
+    public function read($model, array $ids): mixed
+    {
+        $method = 'read';
+
+        $params = $this->buildParams('fields');
+
+        $result = $this->call($model, $method, $ids, $params);
+
+        //Reset params for future queries.
+        $this->resetParams('fields');
+
+        return $this->makeResponse($result);
+    }
 
     /**
      * Retrieve Odoo version.
